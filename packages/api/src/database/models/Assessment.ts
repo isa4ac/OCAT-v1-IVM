@@ -34,7 +34,7 @@ InferCreationAttributes<Assessment>
       },
       instrumentType: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
       score: {
         allowNull: false,
