@@ -9,7 +9,7 @@ assessmentRouter.post(
   `/addAssessment`,
   async (req, res, next) => {
     try {
-      const { assessment } = await req.body;
+      const { assessment } = req.body;
 
       // verify that your data is making it here to the API by using console.log(assessment);
       // console.log(assessment);
@@ -28,7 +28,7 @@ assessmentRouter.post(
 );
 
 assessmentRouter.get(
-  `/`,
+  `/getAssessments`,
   async (req, res, next) => {
     try {
       // verify that your data is making it here to the API by using console.log();
