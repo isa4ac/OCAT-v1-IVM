@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Box } from '@chakra-ui/react';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { AssessmentService } from '../../services/AssessmentService';
 
 export const AssessmentList = () => {
@@ -11,13 +13,67 @@ export const AssessmentList = () => {
     };
     fetchAssessments();
   }, []);
+  const columns = [
+    {
+      accessorKey: `catName`,
+      header: `Name`,
+      // eslint-disable-next-line sort-keys
+      cell: (props) => <p>{props.getValue()}</p>,
+    },
+    {
+      accessorKey: `catDateOfBirth`,
+      header: `Date of Birth`,
+      // eslint-disable-next-line sort-keys
+      cell: (props) => <p>{props.getValue()}</p>,
+    },
+    {
+      accessorKey: `score`,
+      header: `Score`,
+      // eslint-disable-next-line sort-keys
+      cell: (props) => <p>{props.getValue()}</p>,
+    },
+    {
+      accessorKey: `riskLevel`,
+      header: `Risk Level`,
+      // eslint-disable-next-line sort-keys
+      cell: (props) => <p>{props.getValue()}</p>,
+    },
+    {
+      accessorKey: `createdAt`,
+      header: `Record Created`,
+      // eslint-disable-next-line sort-keys
+      cell: (props) => <p>{props.getValue()}</p>,
+    },
+    {
+      accessorKey: `updatedAt`,
+      header: `Last Updated`,
+      // eslint-disable-next-line sort-keys
+      cell: (props) => <p>{props.getValue()}</p>,
+    },
+    {
+      accessorKey: `instrumentType`,
+      header: `Instrument Type`,
+      // eslint-disable-next-line sort-keys
+      cell: (props) => <p>{props.getValue()}</p>,
+    },
+  ];
 
+  const table = useReactTable({
+    assessments,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
   return (
-    <div>
-      {/*
-          List goes here
-          Please use the library react-table https://www.npmjs.com/package/react-table
-      */}
-    </div>
+    <Box>
+      <Box className="table">
+        {table.getHeaderGroups().map((headerGroup) =>
+          <Box className="tr" key={headerGroup.id}>
+            {headerGroup.headers.map((header) =>
+              <Box className="th" key={header.id}>
+                {header.column.columnDef.header}
+              </Box>)}
+          </Box>)}
+      </Box>
+    </Box>
   );
 };
