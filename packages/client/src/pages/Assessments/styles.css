@@ -1,21 +1,17 @@
 table {
   width: 100%;
-  border-collapse: collapse;
 }
 
 th {
-  padding: 0.5rem;
+  padding: 1rem;
+  border-bottom: 1px grey solid;
 }
 
-table, th, td {
-  border: 5px black solid;
+table {
+  border: 1px black solid;
 }
 
 td {
   /* padding: 10px; */
   text-align: center;
-}
-
-th {
-  text-align: left;
 }

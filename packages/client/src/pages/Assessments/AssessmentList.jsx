@@ -73,7 +73,7 @@ export const AssessmentList = () => {
           {table.getHeaderGroups().map(headerGroup =>
             <tr key={headerGroup.id}>
               {headerGroup.headers.map(header =>
-                <th key={header.id}>
+                <th style={{ border: `1px black solid` }} class="text-center" key={header.id}>
                   {flexRender(header.column.columnDef.header, header.getContext())}
                 </th>)}
             </tr>)}
@@ -83,7 +83,7 @@ export const AssessmentList = () => {
             <tr key={row.id}>
               {
                 row.getAllCells().map(cell =>
-                  <td key={cell.id}>
+                  <td style={{ border: `1px black solid` }} key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>)
               }

@@ -19,16 +19,16 @@ exports.submit = async (assessment) => {
     catScore += 1;
   }
 
-  const newDate = new Date();
+  const today = new Date();
 
   await Assessment.create({
-    instrumentType: 2, // TODO: remove hard coded value
+    instrumentType: 2,
     score: catScore,
-    riskLevel: `hard-coded risk level`, // TODO: remove hard coded value
+    riskLevel: catScore > 2 ? `High-Risk` : `Low-Risk`, // if cat's score is higher than 2, it is high-risk
     catName: assessment.catName,
     catDateOfBirth: assessment.DOB,
-    createdAt: newDate.getDate(),
-    updatedAt: newDate.getDate(),
+    createdAt: today.getDate(),
+    updatedAt: today.getDate(),
     deletedAt: null,
   });
   // use the sequelize model Assessments from packages/api/src/database/models to save
