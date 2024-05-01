@@ -23,7 +23,10 @@ export class AssessmentService {
         params: {
         },
       })
-        .then(response => response.data.data.assessment);
+        .then(response => {
+          console.log(response);
+          return response.data.data.assessments;
+        });
     }
     catch (err) {
       throw new Error(`${err.response.statusText} - ${err.response.data.message}`);

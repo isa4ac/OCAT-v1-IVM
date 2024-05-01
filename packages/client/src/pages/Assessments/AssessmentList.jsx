@@ -1,79 +1,95 @@
+/* eslint-disable sort-keys */
 import React, { useEffect, useState } from 'react';
-import { Box } from '@chakra-ui/react';
-import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { AssessmentService } from '../../services/AssessmentService';
+import styles from './styles.css';
 
 export const AssessmentList = () => {
   const [ assessments, setAssessments ] = useState([]);
+  const [ isLoading, setLoading ] = useState(true);
 
   // fetch all assessments using the AssessmentService.getList function from OCAT/client/services/AssessmentService.js
   useEffect(() => {
     const fetchAssessments = async () => {
-      setAssessments(await AssessmentService.getList());
+      const assessmentData = await AssessmentService.getList();
+      setAssessments(assessmentData);
+      setLoading(false);
     };
     fetchAssessments();
   }, []);
+
   const columns = [
     {
       accessorKey: `catName`,
       header: `Name`,
-      // eslint-disable-next-line sort-keys
       cell: (props) => <p>{props.getValue()}</p>,
     },
     {
       accessorKey: `catDateOfBirth`,
       header: `Date of Birth`,
-      // eslint-disable-next-line sort-keys
       cell: (props) => <p>{props.getValue()}</p>,
     },
     {
       accessorKey: `score`,
       header: `Score`,
-      // eslint-disable-next-line sort-keys
       cell: (props) => <p>{props.getValue()}</p>,
     },
     {
       accessorKey: `riskLevel`,
       header: `Risk Level`,
-      // eslint-disable-next-line sort-keys
       cell: (props) => <p>{props.getValue()}</p>,
     },
     {
       accessorKey: `createdAt`,
       header: `Record Created`,
-      // eslint-disable-next-line sort-keys
       cell: (props) => <p>{props.getValue()}</p>,
     },
     {
       accessorKey: `updatedAt`,
       header: `Last Updated`,
-      // eslint-disable-next-line sort-keys
       cell: (props) => <p>{props.getValue()}</p>,
     },
     {
       accessorKey: `instrumentType`,
       header: `Instrument Type`,
-      // eslint-disable-next-line sort-keys
       cell: (props) => <p>{props.getValue()}</p>,
     },
   ];
 
   const table = useReactTable({
-    assessments,
+    data: assessments,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
-    <Box>
-      <Box className="table">
-        {table.getHeaderGroups().map((headerGroup) =>
-          <Box className="tr" key={headerGroup.id}>
-            {headerGroup.headers.map((header) =>
-              <Box className="th" key={header.id}>
-                {header.column.columnDef.header}
-              </Box>)}
-          </Box>)}
-      </Box>
-    </Box>
+    <div>
+      <table>
+        <thead>
+          {table.getHeaderGroups().map(headerGroup =>
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header =>
+                <th key={header.id}>
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                </th>)}
+            </tr>)}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map(row =>
+            <tr key={row.id}>
+              {
+                row.getAllCells().map(cell =>
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>)
+              }
+            </tr>)}
+        </tbody>
+      </table>
+    </div>
   );
 };
