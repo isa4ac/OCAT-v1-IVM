@@ -48,4 +48,26 @@ assessmentRouter.get(
   },
 );
 
+assessmentRouter.delete(
+  `/deleteAssessment/:id`,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+
+      // verify that your data is making it here to the API by using console.log(assessment);
+      console.log(id);
+      // call the AssessmentService.submit function from packages/api/src/microservices/Assessment-Service.js and
+      // supply the correct parameters
+      await AssessmentService.remove(id);
+      ResponseHandler(
+        res,
+        `Assessment deleted`,
+        {},
+      );
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
 module.exports = { assessmentRouter };

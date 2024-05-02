@@ -18,6 +18,13 @@ export const AssessmentList = () => {
     fetchAssessments();
   }, []);
 
+  // Function to handle delete action
+  const handleDelete = async (assessment) => {
+
+    await AssessmentService.remove(assessment);
+    setAssessments(prevAssessments => prevAssessments.filter(a => a.id !== assessment.id));
+  };
+
   const columns = [
     {
       accessorKey: `catName`,
@@ -54,6 +61,13 @@ export const AssessmentList = () => {
       header: `Instrument Type`,
       cell: (props) => <p>{props.getValue()}</p>,
     },
+    {
+      accessorKey: `deleteButton`,
+      header: ``,
+      cell: (props) =>
+        <button onClick={() => handleDelete(props.row.original)}>Delete</button>
+      ,
+    },
   ];
 
   const table = useReactTable({
@@ -73,7 +87,7 @@ export const AssessmentList = () => {
           {table.getHeaderGroups().map(headerGroup =>
             <tr key={headerGroup.id}>
               {headerGroup.headers.map(header =>
-                <th style={{ border: `1px black solid` }} class="text-center" key={header.id}>
+                <th style={{ border: `1px black solid` }} className="text-center" key={header.id}>
                   {flexRender(header.column.columnDef.header, header.getContext())}
                 </th>)}
             </tr>)}

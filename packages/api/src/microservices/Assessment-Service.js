@@ -19,16 +19,12 @@ exports.submit = async (assessment) => {
     catScore += 1;
   }
 
-  const today = new Date();
-
   await Assessment.create({
     instrumentType: 2,
     score: catScore,
     riskLevel: catScore > 2 ? `High-Risk` : `Low-Risk`, // if cat's score is higher than 2, it is high-risk
     catName: assessment.catName,
     catDateOfBirth: assessment.DOB,
-    createdAt: today.getDate(),
-    updatedAt: today.getDate(),
     deletedAt: null,
   });
   // use the sequelize model Assessments from packages/api/src/database/models to save
@@ -43,3 +39,8 @@ exports.getList = async () => {
 
   return assessments.map(assessment => assessment.get({ plain: true }));
 };
+
+exports.remove = async (id) => await Assessment.destroy({
+  where: { id },
+  // logging: console.log,
+});
