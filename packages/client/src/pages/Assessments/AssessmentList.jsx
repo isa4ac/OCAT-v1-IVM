@@ -65,7 +65,7 @@ export const AssessmentList = () => {
       accessorKey: `deleteButton`,
       header: ``,
       cell: (props) =>
-        <button onClick={() => handleDelete(props.row.original)}>Delete</button>
+        <button style={{ color: `red` }} onClick={() => handleDelete(props.row.original)}>Delete</button>
       ,
     },
   ];
