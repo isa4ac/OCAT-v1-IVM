@@ -4,12 +4,14 @@ import { useForm } from 'react-hook-form';
 import { AssessmentService } from '../../services/AssessmentService';
 
 export const NewAssessment = () => {
-  const { formState: { errors }, handleSubmit, register } = useForm();
+
+  const { formState: { errors }, handleSubmit, register, reset } = useForm();
   // create a form that utilizes the "onSubmit" function to send data to
   // packages/client/src/services/AssessmentService.js and then onto the packages/api/src/routes/assessment express API
   const onSubmit = async (data) => {
     console.log(data);
     await AssessmentService.submit(data);
+    reset();
   };
 
   return <Form onSubmit={handleSubmit(onSubmit)}>
