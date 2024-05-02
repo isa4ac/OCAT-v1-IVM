@@ -66,6 +66,10 @@ InferCreationAttributes<Assessment>
       /* eslint-enable sort-keys */
     }, {
       sequelize,
+      // eslint-disable-next-line sort-keys
+      createdAt: true,
+      paranoid: true,
+      updatedAt: true,
     });
 
     return Assessment;

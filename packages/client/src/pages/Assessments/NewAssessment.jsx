@@ -4,12 +4,14 @@ import { useForm } from 'react-hook-form';
 import { AssessmentService } from '../../services/AssessmentService';
 
 export const NewAssessment = () => {
-  const { formState: { errors }, handleSubmit, register } = useForm();
+
+  const { formState: { errors }, handleSubmit, register, reset } = useForm();
   // create a form that utilizes the "onSubmit" function to send data to
   // packages/client/src/services/AssessmentService.js and then onto the packages/api/src/routes/assessment express API
   const onSubmit = async (data) => {
     console.log(data);
     await AssessmentService.submit(data);
+    reset();
   };
 
   return <Form onSubmit={handleSubmit(onSubmit)}>
@@ -18,17 +20,17 @@ export const NewAssessment = () => {
         <label htmlFor="instrument">Cat Behavioral Instrument</label> <br />
         <input id="instrument" type="text" placeholder="Instrument" {...register(`instrument`, { required: true })} />
         <br />
-        {errors.instrument && <p style={{ color: `red` }}>Cat Behavioral Instrument required.</p>}
+        {errors.instrument ? <p style={{ color: `red` }}>Cat Behavioral Instrument required.</p> : undefined}
       </div>
       <div style={{ paddingTop: `20px` }}>
         <label htmlFor="catName">Cat's name</label> <br />
         <input id="catName" type="text" placeholder="Whiskers" {...register(`catName`, { required: true })} /> <br />
-        {errors.catName && <p style={{ color: `red` }}>Cat's name is required.</p>}
+        {errors.catName ? <p style={{ color: `red` }}>Cat's name is required.</p> : undefined}
       </div>
       <div style={{ paddingTop: `20px` }}>
         <label htmlFor="DOB">Cat's date of birth</label> <br />
         <input id="DOB" type="date" {...register(`DOB`, { required: true })} /> <br />
-        {errors.DOB && <p style={{ color: `red` }}>Please enter the cat's date of birth.</p>}
+        {errors.DOB ? <p style={{ color: `red` }}>Please enter the cat's date of birth.</p> : undefined}
       </div>
       <div style={{ paddingTop: `20px` }}>
         <label htmlFor="prevCJS">Previous contact with the Cat Judicial System?</label> <br /> {/* CJS = Cat Judicial System */}
